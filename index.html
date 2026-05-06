@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ShaLoop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <main>
+    <header>
+      <button id="help" class="help" type="button" aria-label="à propos" title="à propos">⊙</button>
+      <h1 class="title"><span class="t-sha">Sha</span><span class="t-loop">Loop</span></h1>
+      <p class="sub">cercle de tambour · boucles de transe</p>
+    </header>
+
+    <div class="drum" aria-hidden="true">
+      <svg viewBox="0 0 280 280" class="drum-svg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="rim-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"  stop-color="#3d2419"/>
+            <stop offset="78%" stop-color="#4a2c1f"/>
+            <stop offset="100%" stop-color="#0a0504"/>
+          </radialGradient>
+          <radialGradient id="skin-grad" cx="38%" cy="32%" r="68%">
+            <stop offset="0%"  stop-color="#e08858"/>
+            <stop offset="32%" stop-color="#a35632"/>
+            <stop offset="72%" stop-color="#5a2818"/>
+            <stop offset="100%" stop-color="#1a0a05"/>
+          </radialGradient>
+          <radialGradient id="skin-shadow" cx="50%" cy="50%" r="50%">
+            <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.55)"/>
+          </radialGradient>
+          <line id="spoke" x1="140" y1="6" x2="140" y2="22"
+                stroke="#0c0604" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <circle id="tick" cx="140" cy="18" r="2.2" fill="#e9b06a"/>
+        </defs>
+
+        <!-- Outer rim (wood) -->
+        <circle cx="140" cy="140" r="138" fill="url(#rim-grad)"/>
+
+        <!-- 8 tension stitches between rim and skin -->
+        <g class="stitches">
+          <use href="#spoke"/>
+          <use href="#spoke" transform="rotate(45 140 140)"/>
+          <use href="#spoke" transform="rotate(90 140 140)"/>
+          <use href="#spoke" transform="rotate(135 140 140)"/>
+          <use href="#spoke" transform="rotate(180 140 140)"/>
+          <use href="#spoke" transform="rotate(225 140 140)"/>
+          <use href="#spoke" transform="rotate(270 140 140)"/>
+          <use href="#spoke" transform="rotate(315 140 140)"/>
+        </g>
+
+        <!-- Skin -->
+        <circle cx="140" cy="140" r="116" fill="url(#skin-grad)"/>
+        <!-- Skin inner shadow -->
+        <circle cx="140" cy="140" r="116" fill="url(#skin-shadow)"/>
+        <!-- Subtle inner ring -->
+        <circle cx="140" cy="140" r="104" fill="none" stroke="#3a1c10" stroke-width="0.6" opacity="0.6"/>
+
+        <!-- 8 ritual marks -->
+        <g class="marks" opacity="0.6">
+          <use href="#tick"/>
+          <use href="#tick" transform="rotate(45 140 140)"/>
+          <use href="#tick" transform="rotate(90 140 140)"/>
+          <use href="#tick" transform="rotate(135 140 140)"/>
+          <use href="#tick" transform="rotate(180 140 140)"/>
+          <use href="#tick" transform="rotate(225 140 140)"/>
+          <use href="#tick" transform="rotate(270 140 140)"/>
+          <use href="#tick" transform="rotate(315 140 140)"/>
+        </g>
+
+        <!-- Central sun sigil -->
+        <g class="sigil" opacity="0.75">
+          <circle cx="140" cy="140" r="26" fill="none" stroke="#e9b06a" stroke-width="0.6"/>
+          <circle cx="140" cy="140" r="16" fill="none" stroke="#e9b06a" stroke-width="0.7"/>
+          <circle cx="140" cy="140" r="5"  fill="#e9b06a"/>
+        </g>
+      </svg>
+
+      <span class="ripple"></span>
+      <span class="ripple"></span>
+      <span class="ripple"></span>
+    </div>
+
+    <section class="controls">
+      <label class="ctrl">
+        <span class="ctrl-label">code</span>
+        <select id="code"></select>
+      </label>
+      <label class="ctrl">
+        <span class="ctrl-label">sample</span>
+        <select id="sample"></select>
+      </label>
+    </section>
+
+    <section class="params" id="params"></section>
+
+    <section class="transport">
+      <button id="play" class="btn primary"><span class="btn-glyph">▷</span><span>play</span></button>
+      <button id="stop" class="btn"><span class="btn-glyph">▢</span><span>stop</span></button>
+    </section>
+
+    <p id="status" class="status">prêt</p>
+
+    <footer><small>strudel · agpl-3.0</small></footer>
+  </main>
+
+  <dialog id="about" class="about">
+    <button class="about-close" type="button" aria-label="fermer">×</button>
+    <h2>à propos</h2>
+    <p>
+      ShaLoop est calibré à partir de ce que l'ethnomusicologie et la
+      neurophysiologie ont établi sur les musiques de transe (Rouget, Neher,
+      Maurer&nbsp;; plus récemment IRCAM, Université de Liège). Quelques
+      invariants trans-culturels qu'on retrouve dans le patch&nbsp;:
+    </p>
+    <ul>
+      <li><b>Pulsation 4–5 Hz</b> (≈&nbsp;240–300 BPM si on compte chaque coup) → zone <em>theta</em> du cerveau.</li>
+      <li><b>Répétition avec micro-variation</b>&nbsp;: la régularité parfaite (machine) « fonctionne » moins bien que la régularité humaine avec des écarts de quelques&nbsp;ms.</li>
+      <li><b>Léger accelerando</b> sur 10–15&nbsp;min, parfois avec retours en arrière.</li>
+      <li><b>Polyrythmie subtile</b>&nbsp;: deux ou trois couches en phase légèrement décalée créent des battements.</li>
+      <li><b>Drone basse fréquence continu</b> (60–90&nbsp;Hz) qui « porte » la pulsation.</li>
+      <li><b>Contenu spectral riche</b>&nbsp;: peau de tambour = harmoniques denses, pas un sinus pur.</li>
+      <li><b>Accents probabilistes</b> plutôt que motifs fixes — le cerveau anticipe moins, reste plus engagé.</li>
+    </ul>
+    <p class="about-foot">
+      Les paramètres exposés permettent de moduler ces invariants en restant
+      dans des plages musicalement efficaces.
+    </p>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="lib/strudel/index.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

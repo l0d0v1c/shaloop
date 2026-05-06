@@ -1,0 +1,42 @@
+// Chargement du sample de tambour depuis Freesound
+samples({
+  frame: 'https://cdn.freesound.org/previews/116/116678_1956076-lq.mp3'
+})
+
+setcps(1) // 1 cycle/seconde = base claire pour calculer en Hz
+
+stack(
+  // Pulsation principale : "pulse" coups/sec (zone theta ~5 Hz)
+  s("frame").fast(pulse)
+    .gain(perlin.range(0.65, 0.85))
+    .nudge(rand.range(-0.012, 0.012))    // micro-décalage temporel humanisant
+    .speed(perlin.range(0.96, 1.04)),     // micro-variation de hauteur
+
+  // Accent grave tous les 3 cycles (côté pulsation cardiaque)
+  s("frame")
+    .every(3, x => x.gain(0.7))
+    .gain(0)
+    .speed(0.7)
+    .lpf(250),
+
+  // Drone sub continu qui "porte" le rythme
+  note(droneNote).s("sawtooth")
+    .lpf(130)
+    .gain(droneGain)
+    .vib(0.3, 0.05),
+
+  // Hochet/texture haute, panné lentement gauche-droite
+  s("hh*8")
+    .gain(shakerGain)
+    .hpf(4000)
+    .pan(sine.range(0.35, 0.65).slow(12)),
+
+  // Couche désaccordée pour créer des battements acoustiques subtils
+  s("frame").fast(pulse)
+    .speed(1.015)
+    .gain(0.25)
+    .pan(0.4)
+    .nudge(rand.range(-0.015, 0.015))
+)
+.slow(cosine.range(0.97, 1.03).slow(driftPeriod))  // dérive très lente
+.room(reverb)                                       // espace acoustique

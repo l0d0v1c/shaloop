@@ -1,0 +1,24 @@
+{
+  "codes": [
+    {
+      "id": "c0",
+      "label": "C0 — Transe theta",
+      "file": "codes/c0.strudel",
+      "params": [
+        { "id": "pulse",       "label": "pulsation (Hz)", "min": 3,   "max": 8,   "step": 0.5, "default": 5 },
+        { "id": "droneNote",   "label": "drone",          "type": "select", "options": ["c0","c1","c2","g0","g1"], "default": "c1" },
+        { "id": "droneGain",   "label": "volume drone",   "min": 0,   "max": 0.5, "step": 0.01, "default": 0.18 },
+        { "id": "reverb",      "label": "reverb",         "min": 0,   "max": 0.8, "step": 0.05, "default": 0.15 },
+        { "id": "driftPeriod", "label": "dérive (sec)",   "min": 30,  "max": 600, "step": 30,   "default": 180 },
+        { "id": "shakerGain",  "label": "hochet",         "min": 0,   "max": 0.2, "step": 0.01, "default": 0.06 }
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "id": "freesound_116678",
+      "label": "Frame drum (Freesound 116678)",
+      "bindings": { "frame": "samples/116678_frame-drum.mp3" }
+    }
+  ]
+}
