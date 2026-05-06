@@ -2,8 +2,10 @@
 
 Générateur de boucles shamaniques — deux outils complémentaires :
 
-- **ShaLoop** (`webapp/`) — joueur live dans le navigateur, paramètres ajustables en temps réel (hot-swap)
+- **ShaLoop** — joueur live dans le navigateur, paramètres ajustables en temps réel (hot-swap)
 - **shaman.csd + render.sh** — rendu offline en MP3 via Csound
+
+**Démo en ligne :** https://l0d0v1c.github.io/shaloop
 
 ## Inspirations
 
@@ -24,31 +26,19 @@ Les paramètres exposés (pulsation, note du drone, dérive, hochet, reverb…) 
 Tout est embarqué localement (runtime Strudel + samples + code en base64 dans `data.js`). Aucun serveur requis :
 
 ```sh
-open webapp/index.html
-```
-
-Pour développer (édition directe sans regénération) :
-
-```sh
-./webapp/serve.sh        # http://localhost:8000
+open index.html
 ```
 
 ### Ajouter un preset
 
-1. Déposer un fichier `.strudel` dans `webapp/codes/`
-2. L'ajouter dans `webapp/manifest.json` avec ses `params` (id, label, min/max/step/default ; ou `type: "select"` + `options`)
+1. Déposer un fichier `.strudel` dans `codes/`
+2. L'ajouter dans `manifest.json` avec ses `params` (id, label, min/max/step/default ; ou `type: "select"` + `options`)
 3. Référencer les params comme variables JS dans le `.strudel` (ex. `s("frame").fast(pulse)`)
-4. Regénérer le bundle inliné :
-
-```sh
-./webapp/bundle.sh
-```
 
 ### Ajouter un sample
 
-1. Déposer le fichier audio dans `webapp/samples/`
+1. Déposer le fichier audio dans `samples/`
 2. Ajouter une entrée dans `manifest.json` (`bindings: { nom: "samples/xxx.mp3" }`)
-3. `./webapp/bundle.sh`
 
 ## Csound
 
@@ -65,7 +55,7 @@ Dépendances : `csound`, `ffmpeg`, `lame` (Homebrew).
 
 ## Licence
 
-**AGPL-3.0-or-later** — imposée par l'embarquement du runtime [Strudel](https://strudel.cc) (`webapp/lib/strudel/`). Toute redistribution, y compris en SaaS / web, doit fournir le code source aux utilisateurs.
+**AGPL-3.0-or-later** — imposée par l'embarquement du runtime [Strudel](https://strudel.cc) (`lib/strudel/`). Toute redistribution, y compris en SaaS / web, doit fournir le code source aux utilisateurs.
 
 La partie Csound (`shaman.csd`, `render.sh`) reste utilisable indépendamment ; Csound est sous LGPL-2.1+.
 
